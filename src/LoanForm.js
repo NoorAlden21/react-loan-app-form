@@ -1,6 +1,7 @@
 import "./FormStyle.css";
 import { useState } from "react";
 import Modal from "./Modal";
+import MyComponent from "./MyComponent";
 export default function LoanForm() {
   const [inputs, setInputs] = useState({
     name: "",
@@ -17,6 +18,10 @@ export default function LoanForm() {
   });
   const btnIsDisabled =
     inputs.name == "" || inputs.age == "" || inputs.phone_number == "";
+
+  function handleInputChange(key, value) {
+    setInputs({ ...inputs, [key]: value });
+  }
   return (
     <div
       onClick={() => {
@@ -27,7 +32,6 @@ export default function LoanForm() {
         className="form"
         onSubmit={(event) => {
           event.preventDefault();
-          console.log(inputs.age);
           if (inputs.age < 18 || inputs.age > 90) {
             setModal({
               visible: true,
@@ -49,35 +53,51 @@ export default function LoanForm() {
               message: "The form has been submitted successfully",
               color: "green",
             });
+            console.log(inputs);
           }
         }}
       >
         <h1>Requesting a Loan</h1>
         <hr />
-        <label>Name:</label>
+        {/* <label>Name:</label>
         <br />
         <input
           value={inputs.name}
           onChange={(event) => {
             setInputs({ ...inputs, name: event.target.value });
           }}
-        ></input>
-        <label>Phone Number:</label>
+        ></input> */}
+        <MyComponent
+          label="Name:"
+          keyName="name"
+          handleChange={handleInputChange}
+        />
+        {/* <label>Phone Number:</label>
         <br />
         <input
           value={inputs.phone_number}
           onChange={(event) => {
             setInputs({ ...inputs, phone_number: event.target.value });
           }}
-        ></input>
-        <label>Age:</label>
+        ></input> */}
+        <MyComponent
+          label="Phone Number:"
+          keyName="phone_number"
+          handleChange={handleInputChange}
+        />
+        {/* <label>Age:</label>
         <br />
         <input
           value={inputs.age}
           onChange={(event) => {
             setInputs({ ...inputs, age: event.target.value });
           }}
-        ></input>
+        ></input> */}
+        <MyComponent
+          label="Age:"
+          keyName="age"
+          handleChange={handleInputChange}
+        />
 
         <label style={{ marginTop: "30px" }}>Are you an employee?</label>
         <br />
